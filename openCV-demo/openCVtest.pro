@@ -16,9 +16,13 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ccombobox.cpp
+        ccombobox.cpp \
+    operations.cpp \
+    customtab.cpp
 
 HEADERS  += mainwindow.h \
-    ccombobox.h
+        ccombobox.h \
+    operations.h \
+    customtab.h
 
 FORMS    += mainwindow.ui

@@ -12,7 +12,6 @@ QString CComboBox::GetPreviousText() { return m_PreviousText; }
 void CComboBox::onComboClicked(QMouseEvent *e)
 {
     m_PreviousText = this->currentText();
-    //QComboBox::onComboClicked(e);
 }
 
 

@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QComboBox>
-#include<QMouseEvent>
+#include <QMouseEvent>
 
 class CComboBox : public QComboBox
 {
