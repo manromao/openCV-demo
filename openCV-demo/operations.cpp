@@ -4,14 +4,14 @@ using namespace cv;
 
 Operations::Operations():
     operationList((QStringList()
-    << "hey"
+    << "Morphology"
     << "hoy"
     << "huy")){
 
 
 }
 
-QVBoxLayout* Operations::switchOperations() const{
+QVBoxLayout* Operations::getLayouts(const QString *operation) const{
 
     return operationMorph();
 }

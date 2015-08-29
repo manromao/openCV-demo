@@ -1,15 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QDir>
 #include <opencv2/opencv.hpp>
 #include <QMainWindow>
-#include <QLabel>
-#include <QLayout>
-#include <QApplication>
-#include <QComboBox>
-#include <ccombobox.h>
 
 
 using namespace std;
@@ -33,36 +29,21 @@ MainWindow::~MainWindow()
 
 // Build an empty Tab into TabWidget
 void MainWindow::createNewTab(){
-    QTabWidget* tab = new QTabWidget();
+    CustomTab *tab = new CustomTab();
+    ui->tabWidget->addTab(tab, tab->getTabText());
 
-    //Set Visual stuff
-    QLabel* operationsLabel = new QLabel("Function:",tab);
-    QFrame* frame = new QFrame(tab);
-    frame->setFrameShape(QFrame::HLine);
-    QVBoxLayout* layout = new QVBoxLayout(tab);    // Layout
-
-    // Combo list
-    CComboBox* combo  = new CComboBox(tab);
-    combo->addItems(op.operationList);
-    connect(combo, SIGNAL(currentTextChanged(QString)),SLOT(onComboClicked()));
-
-    // Construct the layout
-    layout->addWidget(operationsLabel);
-    layout->addWidget(combo);
-    layout->addWidget(frame);
-    layout->addStretch();
-
-    //send layout and tab to display in ui
-    tab->setLayout(layout);
-    ui->tabWidget->addTab(tab, "New Tab");
 }
-void MainWindow::clearTab(const QWidget* tab){
-    QList<QWidget*>widgetList = tab->findChildren<QWidget*>();
-    assert(!widgetList.isEmpty());
+void MainWindow::clearTab(const CustomTab* tab){
+    tab->modifyTab();
+
+}
+
+void deleteTab(CustomTab* tab){
+    delete tab;
 }
 
 // private slots:
-void MainWindow::onComboClicked(){}
+//void MainWindow::onComboClicked(){}
 //void MainWindow::onComboClicked(){
 //    // Set Tab text to currentCombo selection
 //    int currentIndex = ui->tabWidget->currentIndex();
@@ -86,7 +67,8 @@ void MainWindow::onComboClicked(){}
 //          }
 //    }
 //}
-void MainWindow::on_pushButton_clicked()
+
+void MainWindow::onPushButtonClicked()
 {
     QString QfileName = QFileDialog::getOpenFileName();
     std::string fileName = QfileName.toUtf8().constData();
@@ -94,6 +76,6 @@ void MainWindow::on_pushButton_clicked()
     cv::imshow("Image display", currentPicture);
 }
 
-
+void MainWindow::onTabClose(){}
 
 

@@ -15,13 +15,11 @@ class Operations
 {
 public:
     const  QStringList operationList;
-    cv::Mat image;
-    QVBoxLayout* opLayout;
-
     Operations();
-    QVBoxLayout* switchOperations() const;
-private:
+    QVBoxLayout* getLayouts(const QString* operation) const;
+    void switchOperations(const QString* operation) const;
 
+private:
     QVBoxLayout* operationMorph() const;
 
 };

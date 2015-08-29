@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "string.h"
+#include "customtab.h"
 #include "operations.h"
 #include <ccombobox.h>
 #include <opencv2/opencv.hpp>
@@ -24,12 +25,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void createNewTab();
-    void clearTab(const QWidget* tab);
+    void clearTab(const CustomTab* tab);
+    void deleteTab(CustomTab* tab);
 
 
 private slots:
-    void on_pushButton_clicked();
-    void onComboClicked();
+    void onPushButtonClicked();
+    void onTabClose();
 
 private:
     Ui::MainWindow *ui;
