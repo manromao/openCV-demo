@@ -29,12 +29,12 @@ MainWindow::~MainWindow()
 
 // Build an empty Tab into TabWidget
 void MainWindow::createNewTab(){
-    CustomTab *tab = new CustomTab();
+    CustomTab *tab = new CustomTab(ui->tabWidget);
     ui->tabWidget->addTab(tab, tab->getTabText());
 
 }
 void MainWindow::clearTab(const CustomTab* tab){
-    tab->modifyTab();
+
 
 }
 

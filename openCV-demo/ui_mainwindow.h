@@ -54,7 +54,7 @@ public:
         pushButton->setGeometry(QRect(200, 0, 85, 27));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 50, 481, 301));
+        tabWidget->setGeometry(QRect(10, 50, 481, 381));
         tabWidget->setTabsClosable(true);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);

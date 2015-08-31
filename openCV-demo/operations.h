@@ -2,8 +2,8 @@
 #define OPERATIONS_H
 
 #include <QStringList>
-#include <QLayout>
 #include <QLabel>
+#include <QLayout>
 #include <QComboBox>
 #include <QSpinBox>
 
@@ -11,16 +11,19 @@
 
 
 
+
 class Operations
 {
 public:
-    const  QStringList operationList;
+    const QStringList operationList;
+    const QString childName = "operationLayout";
     Operations();
-    QVBoxLayout* getLayouts(const QString* operation) const;
+    QWidget* getLayouts(const QString* operation) const;
     void switchOperations(const QString* operation) const;
 
 private:
-    QVBoxLayout* operationMorph() const;
+    QWidget* operationMorph() const;
+    QWidget* operationColor() const;
 
 };
 
