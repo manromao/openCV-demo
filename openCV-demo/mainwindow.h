@@ -21,15 +21,15 @@ public:
     std::string currentPicturePath;
     cv::Mat currentPicture;
 
-
+public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void createNewTab();
     void clearTab(const CustomTab* tab);
     void deleteTab(CustomTab* tab);
 
-
-private slots:
+protected slots:
+    void onTabNameChanged();
     void onPushButtonClicked();
     void onTabClose();
 

@@ -12,8 +12,9 @@
 
 
 
-class Operations
+class Operations: public QObject
 {
+    Q_OBJECT
 public:
     const QStringList operationList;
     const QString childName = "operationLayout";
@@ -25,6 +26,10 @@ private:
     QWidget* operationMorph() const;
     QWidget* operationColor() const;
 
+ public slots:
+    void onSignalReceived();
+signals:
+    void performOperationEvent();
 };
 
 #endif // OPERATIONS_H

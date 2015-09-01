@@ -10,9 +10,9 @@
 
 class CustomTab : public QTabWidget
 {
+    Q_OBJECT
+
 public:
-
-
     CustomTab(QTabWidget* parent = 0);
 
     ~CustomTab();
@@ -24,9 +24,9 @@ public:
 private:
     QString tabText;
     QString lastTabText;
-
-
     Operations op;
+
+    QTabWidget* getParent();
     void setOperationBox(const QString* operation);
     void doOperation(const QString* operation,const cv::Mat &image);    
     void deleteOperationBox();
@@ -37,10 +37,11 @@ private:
     void GenerateVectorData(const QString* operation);
 
 signals:
-    void onWidgetChanged();
+    void onTabNameChanged();
 
-public slots:
+private slots:
     void onComboClicked(QString text);
+    void onDataChanged();
 
 };
 

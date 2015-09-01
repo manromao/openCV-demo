@@ -18,19 +18,22 @@ CustomTab::CustomTab(QTabWidget* parent) : QTabWidget(parent){
     //send layout and tab to display in ui
     modifyTab(currentOperation);
 
-    parent->addTab(this, this->tabText);
-
+    connect(&op,&Operations::performOperationEvent, this, &CustomTab::onDataChanged);
 
 }
 
 void CustomTab::onComboClicked(QString newOperation){
     // Active only when a new operation is selected
         this->modifyTab(&newOperation);
-
+        emit onTabNameChanged();
 }
 
+void CustomTab::onDataChanged(){
+    std::cout << "Data changed" << std::endl;
+}
 
 CustomTab::~CustomTab(){}
+
 
 
 void CustomTab::modifyTab(QString* newOperation){
@@ -101,4 +104,9 @@ QWidget* CustomTab::getMainBox() {
 
     return mainBox;
 
+}
+
+QTabWidget* CustomTab::getParent(){
+
+    return(qobject_cast<QTabWidget*> (this->parentWidget()));
 }

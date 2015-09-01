@@ -1,5 +1,7 @@
 #include "operations.h"
 
+#define SIGNAL_CAST static_cast<void (QSpinBox::*)(int)>
+
 using namespace cv;
 
 Operations::Operations():
@@ -37,6 +39,12 @@ QWidget* Operations::getLayouts(const QString* operation) const{
 
     return returnLayout;
 }
+
+void Operations::onSignalReceived(){
+    std::cout << "Signal received" << std::endl;
+    emit performOperationEvent();
+}
+
 QWidget* Operations::operationMorph() const{
     QWidget* opWidget = new QWidget();
 
@@ -44,6 +52,8 @@ QWidget* Operations::operationMorph() const{
     currentLayout->setDirection(QBoxLayout::TopToBottom);
 
     // Elements for the new layout
+
+    // Operation
     QLabel* operationLabel = new QLabel("Operation:",opWidget);
     QComboBox* operation = new QComboBox(opWidget);
         operation->addItem("MORPH_OPEN");
@@ -51,18 +61,23 @@ QWidget* Operations::operationMorph() const{
         operation->addItem("MORPH_DILATE");
         operation->addItem("MORPH_ERODE");
 
+
+    //Structuring element
     QLabel* elementLabel = new QLabel("Structuring Element:",opWidget);
     QComboBox* structuringElement = new QComboBox(opWidget);
     structuringElement->addItem("MORPH_RECT");
 
+    // Size
     QLabel* sizeLabel = new QLabel("Size:",opWidget);
     QSpinBox* size = new QSpinBox(opWidget);
     size->setValue(0);
+
+    // iterations
     QLabel* iterationsLabel = new QLabel("Iterations:",opWidget);
     QSpinBox* iterations = new QSpinBox(opWidget);
     iterations->setValue(0);
 
-
+    // set Layout
     currentLayout->addWidget(operationLabel);
     currentLayout->addWidget(operation);
     currentLayout->addWidget(elementLabel);
@@ -78,6 +93,10 @@ QWidget* Operations::operationMorph() const{
     //currentLayout->addStretch();
     opWidget->setLayout(currentLayout);
 
+    connect(operation,&QComboBox::currentTextChanged,this,&Operations::onSignalReceived);
+    connect(structuringElement,&QComboBox::currentTextChanged,this,&Operations::onSignalReceived);
+    connect(size,SIGNAL_CAST(&QSpinBox::valueChanged),this,&Operations::onSignalReceived);
+    connect(iterations,SIGNAL_CAST(&QSpinBox::valueChanged),this,&Operations::onSignalReceived);
     //return
     return opWidget;
 
@@ -108,9 +127,11 @@ QWidget* Operations::operationColor() const{
     currentLayout -> addWidget(operation);
     currentLayout -> addWidget(dstCnLabel);
     currentLayout -> addWidget(dstCn);
-
-    //currentLayout->addStretch();
     opWidget->setLayout(currentLayout);
+
+    // Connects
+    connect(operation,&QComboBox::currentTextChanged,this,&Operations::onSignalReceived);
+    connect(dstCn,SIGNAL_CAST(&QSpinBox::valueChanged),this,&Operations::onSignalReceived);
 
     //return
     return opWidget;
