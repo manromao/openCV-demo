@@ -1,7 +1,7 @@
 #include "customtab.h"
 #include <QLabel>
 #include <QLayout>
-#include <ccombobox.h>
+
 
 
 
@@ -13,23 +13,27 @@ CustomTab::CustomTab(QTabWidget* parent) : QTabWidget(parent){
     QVBoxLayout* tabLayout = new QVBoxLayout(this);
     tabLayout->setDirection(QBoxLayout::TopToBottom);
     tabLayout->addWidget(getMainBox(),0,Qt::AlignTop);
-    //this->setLayout(tabLayout);
 
     //send layout and tab to display in ui
     modifyTab(currentOperation);
 
-    connect(&op,&Operations::performOperationEvent, this, &CustomTab::onDataChanged);
+    connect(&op,&Operations::performOperationEvent,
+            this, &CustomTab::onDataChanged);
 
 }
 
 void CustomTab::onComboClicked(QString newOperation){
     // Active only when a new operation is selected
-        this->modifyTab(&newOperation);
-        emit onTabNameChanged();
+    this->modifyTab(&newOperation);
+    emit onTabNameChanged();
 }
 
 void CustomTab::onDataChanged(){
-    std::cout << "Data changed" << std::endl;
+    emit newOperationEvent();
+}
+
+void CustomTab::onNewOperation(cv::Mat image){
+    doOperation(this->getTabText(), image);
 }
 
 CustomTab::~CustomTab(){}
@@ -45,6 +49,11 @@ void CustomTab::modifyTab(QString* newOperation){
 
     // Change tab name
     this->setTabText(newOperation);
+}
+
+void CustomTab::doOperation(const QString operation, cv::Mat image){
+    op.switchOperations(operation,image);
+
 }
 
 void CustomTab::setTabText(QString* text){
@@ -90,9 +99,9 @@ QWidget* CustomTab::getMainBox() {
     layout->setDirection(QBoxLayout::TopToBottom);
 
     // Combo list
-    CComboBox* combo  = new CComboBox(mainBox);
+    QComboBox* combo  = new QComboBox(mainBox);
     combo->addItems(op.operationList);
-    connect(combo, &CComboBox::currentTextChanged,
+    connect(combo, &QComboBox::currentTextChanged,
             this, &CustomTab::onComboClicked);
 
     // Construct the layout

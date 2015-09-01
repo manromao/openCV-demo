@@ -28,7 +28,7 @@ private:
 
     QTabWidget* getParent();
     void setOperationBox(const QString* operation);
-    void doOperation(const QString* operation,const cv::Mat &image);    
+    void doOperation(const QString operation,cv::Mat image);
     void deleteOperationBox();
 
     QWidget* getMainBox();
@@ -38,11 +38,12 @@ private:
 
 signals:
     void onTabNameChanged();
+    void newOperationEvent();
 
-private slots:
+public slots:
     void onComboClicked(QString text);
     void onDataChanged();
-
+    void onNewOperation(cv::Mat image);
 };
 
 #endif // CUSTOMTAB_H

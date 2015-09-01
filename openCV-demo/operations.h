@@ -8,8 +8,11 @@
 #include <QSpinBox>
 
 #include <opencv2/opencv.hpp>
+class Operations;
+class Function;
+#include "operations/function.h"
 
-
+#define SIGNAL_CAST static_cast<void (QSpinBox::*)(int)>
 
 
 class Operations: public QObject
@@ -18,13 +21,11 @@ class Operations: public QObject
 public:
     const QStringList operationList;
     const QString childName = "operationLayout";
-    Operations();
-    QWidget* getLayouts(const QString* operation) const;
-    void switchOperations(const QString* operation) const;
+    Function* selectedOperation;
 
-private:
-    QWidget* operationMorph() const;
-    QWidget* operationColor() const;
+    Operations();
+    QWidget* getLayouts(const QString* operation);
+    void switchOperations(const QString operation, cv::Mat image) const;
 
  public slots:
     void onSignalReceived();

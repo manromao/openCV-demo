@@ -8,21 +8,28 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QMAKE_CXXFLAGS += -std=c++11
+
 TARGET = openCVtest
 TEMPLATE = app
 
 INCLUDEPATH += /usr/local/include/opencv
-LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-        ccombobox.cpp \
     operations.cpp \
-    customtab.cpp
+    customtab.cpp \
+    operations/morphology.cpp \
+    operations/cvtcolor.cpp \
+    operations/function.cpp
+
 
 HEADERS  += mainwindow.h \
-        ccombobox.h \
     operations.h \
-    customtab.h
+    customtab.h \
+    operations/morphology.h \
+    operations/cvtcolor.h \
+    operations/function.h
 
 FORMS    += mainwindow.ui
