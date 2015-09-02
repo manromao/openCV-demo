@@ -11,9 +11,7 @@ Morphology::Morphology(Function *parent) : Function(parent),
                << "MORPH_GRADIENT"
                << "MORPH_TOPHAT"
                << "MORPH_BLACKHAT")
-{
-std::cout << "new instance" <<std::endl;
-}
+{}
 
 QWidget* Morphology::getLayout(const Operations* op){
     QWidget* opWidget = new QWidget();

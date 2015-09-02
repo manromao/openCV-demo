@@ -33,10 +33,12 @@ void CustomTab::onDataChanged(){
 }
 
 void CustomTab::onNewOperation(cv::Mat image){
-    doOperation(this->getTabText(), image);
+    doOperation( image);
 }
 
-CustomTab::~CustomTab(){}
+CustomTab::~CustomTab(){
+
+}
 
 
 
@@ -51,8 +53,9 @@ void CustomTab::modifyTab(QString* newOperation){
     this->setTabText(newOperation);
 }
 
-void CustomTab::doOperation(const QString operation, cv::Mat image){
-    op.switchOperations(operation,image);
+void CustomTab::doOperation(cv::Mat image){
+
+    op.switchOperations(this->getTabText(),image);
 
 }
 

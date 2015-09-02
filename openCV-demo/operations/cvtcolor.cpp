@@ -6,9 +6,7 @@ CvtColor::CvtColor(Function *parent) : Function(parent),
                    << "COLOR_GRAY2RGB"
                    << "COLOR_RGB2HSV"
                    << "COLOR_HSV2RGB")
-{
-std::cout << "new instance" <<std::endl;
-}
+{}
 
 QWidget* CvtColor::getLayout(const Operations *op){
 

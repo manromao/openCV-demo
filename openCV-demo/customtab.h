@@ -14,12 +14,11 @@ class CustomTab : public QTabWidget
 
 public:
     CustomTab(QTabWidget* parent = 0);
-
     ~CustomTab();
     void modifyTab(QString* newOperation);
-
     void setTabText(QString* text);
     QString  getTabText();
+    void doOperation(cv::Mat image);
 
 private:
     QString tabText;
@@ -28,7 +27,7 @@ private:
 
     QTabWidget* getParent();
     void setOperationBox(const QString* operation);
-    void doOperation(const QString operation,cv::Mat image);
+
     void deleteOperationBox();
 
     QWidget* getMainBox();

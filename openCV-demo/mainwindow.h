@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTabWidget>
 #include "string.h"
 #include "customtab.h"
 #include "operations.h"
@@ -31,15 +32,16 @@ private:
     void deleteTab(CustomTab* tab);
     void updateTabName();
     void showImage();
-
+    void tabCreator();
 signals:
     void newOperationEvent(cv::Mat image);
 
-protected slots:
+private slots:
     void onTabNameChanged();
     void newOperationSlot();
     void onPushButtonClicked();
-    void onTabClose();
+    void onTabClose(int index);
+    void onTabWidgetClicked(int index);
 
 private:
     Ui::MainWindow *ui;
