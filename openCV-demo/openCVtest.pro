@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     customtab.cpp \
     operations/morphology.cpp \
     operations/cvtcolor.cpp \
-    operations/function.cpp
+    operations/function.cpp \
+    operations/cannyedges.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -30,6 +31,7 @@ HEADERS  += mainwindow.h \
     customtab.h \
     operations/morphology.h \
     operations/cvtcolor.h \
-    operations/function.h
+    operations/function.h \
+    operations/cannyedges.h
 
 FORMS    += mainwindow.ui

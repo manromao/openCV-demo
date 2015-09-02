@@ -7,7 +7,6 @@
 #include <opencv2/opencv.hpp>
 #include <QMainWindow>
 
-
 using namespace std;
 using namespace cv;
 
@@ -24,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->tabWidget, &QTabWidget::tabBarClicked,
             this,&MainWindow::onTabWidgetClicked);
 
-    //createNewTab();
     tabCreator();
 
 
@@ -36,7 +34,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// Public:
+// Private:
 
 // Build an empty Tab into TabWidget
 void MainWindow::createNewTab(){
@@ -45,52 +43,10 @@ void MainWindow::createNewTab(){
     ui->tabWidget->insertTab(insertIndex,tab, tab->getTabText());
     connect(tab, &CustomTab::onTabNameChanged, this, &MainWindow::onTabNameChanged);
     connect(tab,&CustomTab::newOperationEvent,this, &MainWindow::newOperationSlot);
-    connect(this,&MainWindow::newOperationEvent,tab,&CustomTab::onNewOperation);
-
 }
 
 void MainWindow::deleteTab(CustomTab* tab){
     delete tab;
-}
-
-// private slots:
-
-void MainWindow::onTabNameChanged(){
-    updateTabName();
-}
-
-void MainWindow::newOperationSlot(){
-    originalPicture.copyTo(currentPicture);
-    //emit newOperationEvent(currentPicture);
-    CustomTab* tab;
-    for (int index = 0; index < ui->tabWidget->count()-1; ++index) {
-        tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
-        tab->doOperation(currentPicture);
-    }
-    showImage();
-}
-
-
-
-void MainWindow::onPushButtonClicked()
-{
-    QString QfileName = QFileDialog::getOpenFileName();
-    std::string fileName = QfileName.toUtf8().constData();
-    originalPicture = cv::imread(fileName);
-    originalPicture.copyTo(currentPicture);
-    showImage();
-}
-
-void MainWindow::onTabClose(int index){
-    CustomTab* tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
-    deleteTab(tab);
-}
-
-void MainWindow::onTabWidgetClicked(int index){
-    // If last element clicked
-    if (index == ui->tabWidget->count()-1){
-        createNewTab();
-    }
 }
 
 void MainWindow::updateTabName(){
@@ -100,7 +56,8 @@ void MainWindow::updateTabName(){
 }
 
 void MainWindow::showImage(){
-    cv::imshow("Image display", currentPicture);
+    if (!currentPicture.empty()) cv::imshow("Image display", currentPicture);
+    else std::cout << "MainWindow::showImage: Trying to show empty picture" << std::endl;
 }
 
 void MainWindow::tabCreator(){
@@ -114,3 +71,55 @@ void MainWindow::tabCreator(){
     ui->tabWidget->tabBar()->setTabTextColor(0,Qt::black);
 
 }
+
+cv::Mat MainWindow::callAllOperations(){
+    originalPicture.copyTo(currentPicture);
+    cv::Mat returnImage;
+    CustomTab* tab;
+    for (int index = 0; index < ui->tabWidget->count()-1; ++index) {
+        tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
+        tab->doOperation(currentPicture).copyTo(returnImage);
+    }
+
+    return (returnImage);
+}
+
+// private slots:
+
+void MainWindow::onTabNameChanged(){
+    updateTabName();
+}
+
+void MainWindow::newOperationSlot(){   
+    if (!currentPicture.empty()){
+        currentPicture = callAllOperations();
+        showImage();
+    }
+    else {
+        std::cout << "Warning! No image loaded" << std::endl;
+    }
+}
+
+void MainWindow::onPushButtonClicked()
+{
+    QString QfileName = QFileDialog::getOpenFileName();
+    std::string fileName = QfileName.toUtf8().constData();
+    originalPicture = cv::imread(fileName,CV_LOAD_IMAGE_COLOR);
+    originalPicture.copyTo(currentPicture);
+    showImage();
+}
+
+void MainWindow::onTabClose(int index){
+    CustomTab* tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
+    deleteTab(tab);
+    newOperationSlot();
+}
+
+void MainWindow::onTabWidgetClicked(int index){
+    // If last element clicked
+    if (index == ui->tabWidget->count()-1){
+        createNewTab();
+    }
+}
+
+

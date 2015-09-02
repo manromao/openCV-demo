@@ -1,18 +1,29 @@
 #ifndef MORPHOLOGY_H
 #define MORPHOLOGY_H
 
-#include "function.h"
 #include <QObject>
+#include <QSpinBox>
+#include <QComboBox>
+#include <QLayout>
+#include <QLabel>
+#include "function.h"
+
 
 class Morphology: public Function
 {
     Q_OBJECT
 public:
     explicit Morphology(Function *parent = 0);
-    virtual QWidget* getLayout(const Operations* op);
+    ~Morphology();
+    virtual QWidget* getLayout(const Operations* connectingInstance);
     virtual cv::Mat processImage(cv::Mat image) const;
+
 private:
-    const QStringList operationsList;
+    const QStringList operationsList;    
+    int getOperationCode() const;
+    int getStructuringElement() const;
+    int getSize() const;
+    int getIterations() const;
 
     //Widgets
     QWidget* mainBox;
@@ -21,10 +32,6 @@ private:
     QSpinBox* size;
     QSpinBox* iterations;
 
-    int getOperationCode() const;
-    int getStructuringElement() const;
-    int getSize() const;
-    int getIterations() const;
 };
 
 #endif // MORPHOLOGY_H

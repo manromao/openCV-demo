@@ -1,15 +1,17 @@
 #include "function.h"
+#include <QWidget>
+#include <QDebug>
 
-Function::Function(QObject *parent) : QObject(parent)
-{
+Function::Function(QObject *parent) : QObject(parent){}
 
+Function::~Function(){
+    qDebug() << "CvtColor destructor";
 }
 
-QWidget* Function::getLayout(const Operations* op){
-    std::cout << "should never reach" << std::endl;
-    return new QWidget();
+QWidget* Function::getLayout(const Operations* ){
+    return (new QWidget());
 }
+
 cv::Mat Function::processImage(cv::Mat image) const{
-    std::cout << "should never reach" << std::endl;
-    return cv::Mat();
+    return cv::Mat(image);
 }

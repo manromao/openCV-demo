@@ -1,19 +1,10 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
 
-#include <QStringList>
-#include <QLabel>
-#include <QLayout>
-#include <QComboBox>
-#include <QSpinBox>
-
 #include <opencv2/opencv.hpp>
 class Operations;
 class Function;
 #include "operations/function.h"
-
-#define SIGNAL_CAST static_cast<void (QSpinBox::*)(int)>
-
 
 class Operations: public QObject
 {
@@ -24,8 +15,9 @@ public:
     Function* selectedOperation;
 
     Operations();
+    ~Operations();
     QWidget* getLayouts(const QString* operation);
-    void switchOperations(const QString operation, cv::Mat image) const;
+    cv::Mat switchOperations(cv::Mat image) const;
 
  public slots:
     void onSignalReceived();

@@ -1,5 +1,5 @@
 #include "morphology.h"
-
+#include <QDebug>
 using namespace cv;
 
 Morphology::Morphology(Function *parent) : Function(parent),
@@ -10,17 +10,22 @@ Morphology::Morphology(Function *parent) : Function(parent),
                << "MORPH_CLOSE"
                << "MORPH_GRADIENT"
                << "MORPH_TOPHAT"
-               << "MORPH_BLACKHAT")
-{}
+               << "MORPH_BLACKHAT"){}
 
+
+Morphology::~Morphology(){
+    qDebug() << "CvtColor destructor";
+}
+
+//Public
 QWidget* Morphology::getLayout(const Operations* op){
+
     QWidget* opWidget = new QWidget();
 
     QVBoxLayout* currentLayout = new QVBoxLayout(opWidget);
     currentLayout->setDirection(QBoxLayout::TopToBottom);
 
     // Elements for the new layout
-
     // Operation
     QLabel* operationLabel = new QLabel("Operation:",opWidget);
     operationCombo = new QComboBox(opWidget);
@@ -31,9 +36,10 @@ QWidget* Morphology::getLayout(const Operations* op){
     structuringElement = new QComboBox(opWidget);
     structuringElement->addItem("MORPH_RECT");
 
-    // Size
+    //Size
     QLabel* sizeLabel = new QLabel("Size:",opWidget);
     size = new QSpinBox(opWidget);
+    size->setMinimum(1);
     size->setValue(1);
 
     // iterations
@@ -47,6 +53,7 @@ QWidget* Morphology::getLayout(const Operations* op){
     currentLayout->addWidget(elementLabel);
     currentLayout->addWidget(structuringElement);
 
+    //SubLayout
     QGridLayout* horizontal = new QGridLayout();
     horizontal->addWidget(sizeLabel,0,0,1,1);
     horizontal->addWidget(iterationsLabel,0,1,1,1);
@@ -56,15 +63,17 @@ QWidget* Morphology::getLayout(const Operations* op){
     currentLayout->addLayout(horizontal);
     opWidget->setLayout(currentLayout);
 
+    //Connects
     QObject::connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
     QObject::connect(structuringElement,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
-    QObject::connect(size,SIGNAL_CAST(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
-    QObject::connect(iterations,SIGNAL_CAST(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
+    QObject::connect(size,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
+    QObject::connect(iterations,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
 
     //return
     return opWidget;
 
 }
+
 cv::Mat Morphology::processImage(cv::Mat image) const{
     int code = getOperationCode();
     int shape = getStructuringElement();
@@ -74,11 +83,11 @@ cv::Mat Morphology::processImage(cv::Mat image) const{
 
     cv::morphologyEx(image,image,code,element,Point(-1,-1),iterat,
                      BORDER_CONSTANT,morphologyDefaultBorderValue());
-    std::cout << &image << std::endl;
 
-    return cv::Mat();
+    return image;
 }
 
+// Private
 int Morphology::getOperationCode() const{
     QString op = operationCombo->currentText();
     int index = operationsList.indexOf(op);
@@ -113,17 +122,23 @@ int Morphology::getOperationCode() const{
     case 6:
         code = cv::MORPH_BLACKHAT;
         break;
+    default:
+        code=0;
+        break;
     }
 
     return code;
 
 }
+
 int Morphology::getStructuringElement() const{
     return (cv::MORPH_RECT);
 }
+
 int Morphology::getSize() const{
     return(size->value());
 }
+
 int Morphology::getIterations() const{
     return (iterations->value());
 }

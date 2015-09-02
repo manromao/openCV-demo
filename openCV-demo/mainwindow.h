@@ -25,7 +25,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-
 private:
     void createNewTab();
     void clearTab(const CustomTab* tab);
@@ -33,8 +32,7 @@ private:
     void updateTabName();
     void showImage();
     void tabCreator();
-signals:
-    void newOperationEvent(cv::Mat image);
+    cv::Mat callAllOperations();
 
 private slots:
     void onTabNameChanged();
