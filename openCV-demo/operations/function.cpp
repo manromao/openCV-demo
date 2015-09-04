@@ -5,7 +5,7 @@
 Function::Function(QObject *parent) : QObject(parent){}
 
 Function::~Function(){
-    qDebug() << "CvtColor destructor";
+    qDebug() << "Function destructor";
 }
 
 QWidget* Function::getLayout(const Operations* ){

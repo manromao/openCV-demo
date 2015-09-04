@@ -14,20 +14,20 @@ CvtColor::~CvtColor(){
 
 QWidget* CvtColor::getLayout(const Operations *op){
 
-    QWidget* opWidget = new QWidget();
+    mainBox = new QWidget();
 
     // Layout Set-up
-    QVBoxLayout* currentLayout = new QVBoxLayout(opWidget);
+    QVBoxLayout* currentLayout = new QVBoxLayout(mainBox);
 
     //Item set-up
     // Color codes
-    QLabel* conversionCode = new QLabel("Code:",opWidget);
-    operationCombo = new QComboBox(opWidget);
+    QLabel* conversionCode = new QLabel("Code:",mainBox);
+    operationCombo = new QComboBox(mainBox);
     operationCombo->addItems(operationsList);
 
     //dstCn
-    QLabel* dstCnLabel = new QLabel("Number of channels(0 for auto):",opWidget);
-    dstCn = new QSpinBox(opWidget);
+    QLabel* dstCnLabel = new QLabel("Number of channels(0 for auto):",mainBox);
+    dstCn = new QSpinBox(mainBox);
     dstCn->setValue(0);
 
     // Build layout
@@ -35,14 +35,14 @@ QWidget* CvtColor::getLayout(const Operations *op){
     currentLayout -> addWidget(operationCombo);
     currentLayout -> addWidget(dstCnLabel);
     currentLayout -> addWidget(dstCn);
-    opWidget->setLayout(currentLayout);
+    mainBox->setLayout(currentLayout);
 
     // Connects
     connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
     connect(dstCn,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
 
     //return
-    return opWidget;
+    return mainBox;
 }
 
 cv::Mat CvtColor::processImage(cv::Mat image) const{

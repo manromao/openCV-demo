@@ -13,19 +13,23 @@ Operations::Operations():
     << "Morphology"
     << "CvtColor"
     << "Canny Edges"
-    << "huy")){}
+    << "huy")){
+
+    selectedOperation = new Function(this);
+}
 
 Operations::~Operations(){
     std::cout << "Operations destructor" << std::endl;
-    delete selectedOperation;
+    selectedOperation->deleteLater();
 }
 
 QWidget* Operations::getLayouts(const QString* operation){
 
     QWidget* returnLayout;
 
+    delete (selectedOperation);
     //look for operation
-   if (*operation == "Morphology"){
+   if (*operation == "Morphology"){       
        selectedOperation = new Morphology();
        returnLayout = selectedOperation->getLayout(this);
 

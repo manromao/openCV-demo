@@ -7,7 +7,7 @@
 // Public
 CustomTab::CustomTab(QTabWidget* parent) : QTabWidget(parent){
 
-    QString* currentOperation = new QString(op.operationList[0]);
+    QString* currentOperation = new QString(op.operationList[0]); // Change to stack
     this->setTabText(currentOperation);
 
     QVBoxLayout* tabLayout = new QVBoxLayout(this);
@@ -19,6 +19,7 @@ CustomTab::CustomTab(QTabWidget* parent) : QTabWidget(parent){
 
     connect(&op,&Operations::performOperationEvent,
             this, &CustomTab::onDataChanged);
+    delete(currentOperation);
 
 }
 

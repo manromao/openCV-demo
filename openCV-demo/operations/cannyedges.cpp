@@ -7,6 +7,7 @@ CannyEdges::~CannyEdges(){
 }
 
 QWidget* CannyEdges::getLayout(const Operations* op){
+
     mainBox = new QWidget();
 
     // Elements:

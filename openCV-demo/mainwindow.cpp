@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
 }
 
@@ -56,6 +55,7 @@ void MainWindow::updateTabName(){
 }
 
 void MainWindow::showImage(){
+    cv::namedWindow("Image display", WINDOW_NORMAL);
     if (!currentPicture.empty()) cv::imshow("Image display", currentPicture);
     else std::cout << "MainWindow::showImage: Trying to show empty picture" << std::endl;
 }
@@ -66,7 +66,6 @@ void MainWindow::tabCreator(){
     ui->tabWidget->addTab(tab,"+");
 
     // Remove close button
-
     ui->tabWidget->tabBar()->tabButton(0, QTabBar::RightSide)->resize(0, 0);
     ui->tabWidget->tabBar()->setTabTextColor(0,Qt::black);
 

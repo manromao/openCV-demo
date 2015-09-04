@@ -12,7 +12,7 @@ class Function : public QObject
     Q_OBJECT
 public:
     explicit Function(QObject *parent = 0);
-    ~Function();
+    virtual ~Function();
     virtual QWidget* getLayout(const Operations* connectingInstance);
     virtual cv::Mat processImage(cv::Mat image) const;
 };

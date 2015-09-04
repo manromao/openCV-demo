@@ -14,37 +14,37 @@ Morphology::Morphology(Function *parent) : Function(parent),
 
 
 Morphology::~Morphology(){
-    qDebug() << "CvtColor destructor";
+    qDebug() << "Morphology destructor";
 }
 
 //Public
 QWidget* Morphology::getLayout(const Operations* op){
 
-    QWidget* opWidget = new QWidget();
+    mainBox = new QWidget();
 
-    QVBoxLayout* currentLayout = new QVBoxLayout(opWidget);
+    QVBoxLayout* currentLayout = new QVBoxLayout(mainBox);
     currentLayout->setDirection(QBoxLayout::TopToBottom);
 
     // Elements for the new layout
     // Operation
-    QLabel* operationLabel = new QLabel("Operation:",opWidget);
-    operationCombo = new QComboBox(opWidget);
+    QLabel* operationLabel = new QLabel("Operation:",mainBox);
+    operationCombo = new QComboBox(mainBox);
     operationCombo->addItems(operationsList);
 
     //Structuring element
-    QLabel* elementLabel = new QLabel("Structuring Element:",opWidget);
-    structuringElement = new QComboBox(opWidget);
+    QLabel* elementLabel = new QLabel("Structuring Element:",mainBox);
+    structuringElement = new QComboBox(mainBox);
     structuringElement->addItem("MORPH_RECT");
 
     //Size
-    QLabel* sizeLabel = new QLabel("Size:",opWidget);
-    size = new QSpinBox(opWidget);
+    QLabel* sizeLabel = new QLabel("Size:",mainBox);
+    size = new QSpinBox(mainBox);
     size->setMinimum(1);
     size->setValue(1);
 
     // iterations
-    QLabel* iterationsLabel = new QLabel("Iterations:",opWidget);
-    iterations = new QSpinBox(opWidget);
+    QLabel* iterationsLabel = new QLabel("Iterations:",mainBox);
+    iterations = new QSpinBox(mainBox);
     iterations->setValue(1);
 
     // set Layout
@@ -54,14 +54,14 @@ QWidget* Morphology::getLayout(const Operations* op){
     currentLayout->addWidget(structuringElement);
 
     //SubLayout
-    QGridLayout* horizontal = new QGridLayout();
+    QGridLayout* horizontal = new QGridLayout(mainBox);
     horizontal->addWidget(sizeLabel,0,0,1,1);
     horizontal->addWidget(iterationsLabel,0,1,1,1);
     horizontal->addWidget(size,1,0,1,1);
     horizontal->addWidget(iterations,1,1,1,1);
 
     currentLayout->addLayout(horizontal);
-    opWidget->setLayout(currentLayout);
+    mainBox->setLayout(currentLayout);
 
     //Connects
     QObject::connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
@@ -70,7 +70,7 @@ QWidget* Morphology::getLayout(const Operations* op){
     QObject::connect(iterations,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
 
     //return
-    return opWidget;
+    return mainBox;
 
 }
 
