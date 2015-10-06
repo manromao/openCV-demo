@@ -38,8 +38,8 @@ QWidget* CvtColor::getLayout(const Operations *op){
     mainBox->setLayout(currentLayout);
 
     // Connects
-    connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
-    connect(dstCn,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
+    connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onWidgetChanged);
+    connect(dstCn,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
 
     //return
     return mainBox;

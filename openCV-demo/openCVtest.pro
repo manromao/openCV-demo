@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     operations/morphology.cpp \
     operations/cvtcolor.cpp \
     operations/function.cpp \
-    operations/cannyedges.cpp
+    operations/cannyedges.cpp \
+    operations/thresholdgray.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -32,6 +33,7 @@ HEADERS  += mainwindow.h \
     operations/morphology.h \
     operations/cvtcolor.h \
     operations/function.h \
-    operations/cannyedges.h
+    operations/cannyedges.h \
+    operations/thresholdgray.h
 
 FORMS    += mainwindow.ui

@@ -20,7 +20,7 @@ public:
     cv::Mat switchOperations(cv::Mat image) const;
 
  public slots:
-    void onSignalReceived();
+    void onWidgetChanged(); //old onSignalReceived
 signals:
     void performOperationEvent();
 };

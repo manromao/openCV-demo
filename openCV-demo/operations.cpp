@@ -2,7 +2,7 @@
 #include "operations/cannyedges.h"
 #include "operations/morphology.h"
 #include "operations/cvtcolor.h"
-
+#include "operations/thresholdgray.h"
 
 
 using namespace cv;
@@ -13,7 +13,8 @@ Operations::Operations():
     << "Morphology"
     << "CvtColor"
     << "Canny Edges"
-    << "huy")){
+    << "Threshold(GRAY)"
+    )){
 
     selectedOperation = new Function(this);
 }
@@ -44,6 +45,12 @@ QWidget* Operations::getLayouts(const QString* operation){
        returnLayout = selectedOperation->getLayout(this);
 
    }
+   else if (*operation == "Threshold(GRAY)"){
+       selectedOperation = new thresholdGray();
+       returnLayout = selectedOperation->getLayout(this);
+
+   }
+
    else{
        std::cout << "operation doesn't exist" << std::endl;
        return NULL;
@@ -61,7 +68,7 @@ cv::Mat Operations::switchOperations(cv::Mat image) const{
 }
 
 //Slots
-void Operations::onSignalReceived(){
+void Operations::onWidgetChanged(){
     emit performOperationEvent();
 }
 

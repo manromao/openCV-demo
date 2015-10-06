@@ -47,10 +47,10 @@ QWidget* CannyEdges::getLayout(const Operations* op){
     layout->addWidget(useL2,3,1,1,1,Qt::AlignCenter);
 
     // Connects
-    connect(upThreshold, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
-    connect(lowThreshold, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
-    connect(apertureSize, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
-    connect(useL2, (&QCheckBox::stateChanged),op,&Operations::onSignalReceived);
+    connect(upThreshold, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
+    connect(lowThreshold, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
+    connect(apertureSize, SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
+    connect(useL2, (&QCheckBox::stateChanged),op,&Operations::onWidgetChanged);
 
     return mainBox;
 }

@@ -64,10 +64,10 @@ QWidget* Morphology::getLayout(const Operations* op){
     mainBox->setLayout(currentLayout);
 
     //Connects
-    QObject::connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
-    QObject::connect(structuringElement,&QComboBox::currentTextChanged,op,&Operations::onSignalReceived);
-    QObject::connect(size,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
-    QObject::connect(iterations,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onSignalReceived);
+    QObject::connect(operationCombo,&QComboBox::currentTextChanged,op,&Operations::onWidgetChanged);
+    QObject::connect(structuringElement,&QComboBox::currentTextChanged,op,&Operations::onWidgetChanged);
+    QObject::connect(size,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
+    QObject::connect(iterations,SIGNAL_CAST_INT(&QSpinBox::valueChanged),op,&Operations::onWidgetChanged);
 
     //return
     return mainBox;
