@@ -7,12 +7,12 @@
 #include <QSpinBox>
 #include "function.h"
 
-class thresholdGray : public Function
+class ThresholdGray : public Function
 {
     Q_OBJECT
 public:
-    explicit thresholdGray(Function* parent = 0);
-    ~thresholdGray();
+    explicit ThresholdGray(Function* parent = 0);
+    ~ThresholdGray();
     virtual QWidget* getLayout(const Operations* connectingInstance);
     virtual cv::Mat processImage(cv::Mat image) const;
 

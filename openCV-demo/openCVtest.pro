@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     operations/cvtcolor.cpp \
     operations/function.cpp \
     operations/cannyedges.cpp \
-    operations/thresholdgray.cpp
+    operations/thresholdgray.cpp \
+    operations/houghlinesPdetector.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -34,6 +35,7 @@ HEADERS  += mainwindow.h \
     operations/cvtcolor.h \
     operations/function.h \
     operations/cannyedges.h \
-    operations/thresholdgray.h
+    operations/thresholdgray.h \
+    operations/houghlinesPdetector.h
 
 FORMS    += mainwindow.ui

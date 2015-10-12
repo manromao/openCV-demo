@@ -77,10 +77,10 @@ cv::Mat MainWindow::callAllOperations(){
     CustomTab* tab;
     for (int index = 0; index < ui->tabWidget->count()-1; ++index) {
         tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
-        tab->doOperation(currentPicture).copyTo(returnImage);
+        tab->doOperation(currentPicture).copyTo(currentPicture);
     }
 
-    return (returnImage);
+    return (currentPicture);
 }
 
 // private slots:
@@ -95,7 +95,14 @@ void MainWindow::newOperationSlot(){
         showImage();
     }
     else {
-        std::cout << "Warning! No image loaded" << std::endl;
+        if (originalPicture.empty()){
+            std::cout << "Warning! No image loaded" << std::endl;
+        }
+        else{
+            currentPicture = originalPicture.clone();
+            newOperationSlot();
+        }
+
     }
 }
 

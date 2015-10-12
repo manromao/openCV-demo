@@ -4,7 +4,7 @@
 
 
 // Public
-thresholdGray::thresholdGray(Function *parent) : Function(parent),
+ThresholdGray::ThresholdGray(Function *parent) : Function(parent),
     type( QStringList()
            << "THRESH_BINARY"
            <<  "THRESH_BINARY_INV"
@@ -13,11 +13,11 @@ thresholdGray::thresholdGray(Function *parent) : Function(parent),
            << "THRESH_TOZERO_INV")
 {}
 
-thresholdGray::~thresholdGray(){
+ThresholdGray::~ThresholdGray(){
 
 }
 
-QWidget* thresholdGray::getLayout(const Operations* connectingInstance){
+QWidget* ThresholdGray::getLayout(const Operations* connectingInstance){
     mainBox = new QWidget();
 
     // Set layout
@@ -48,15 +48,15 @@ QWidget* thresholdGray::getLayout(const Operations* connectingInstance){
     connect(threshold,SIGNAL_CAST_INT(&QSpinBox::valueChanged),connectingInstance,&Operations::onWidgetChanged);
 
     return mainBox;
-
-
-
 }
 
-cv::Mat thresholdGray::processImage(cv::Mat image) const{
+cv::Mat ThresholdGray::processImage(cv::Mat image) const{
     int type = getType();
     int threshold = getThreshold();
-    cv::cvtColor(image,image,cv::COLOR_BGR2GRAY);
+
+    if(image.channels() == 3){
+        cv::cvtColor(image,image,cv::COLOR_BGR2GRAY);
+    }
 
     cv::threshold(image,image,threshold,255,type);
 
@@ -67,7 +67,7 @@ cv::Mat thresholdGray::processImage(cv::Mat image) const{
 
 // Private
 
-int thresholdGray::getType() const{
+int ThresholdGray::getType() const{
     QString currentType = typeCombo->currentText();
     int returnType;
     int index = type.indexOf(currentType);
@@ -105,7 +105,7 @@ int thresholdGray::getType() const{
 
 }
 
-int thresholdGray::getThreshold() const{
+int ThresholdGray::getThreshold() const{
     return (threshold->value());
 
 }
