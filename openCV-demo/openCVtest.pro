@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     operations/function.cpp \
     operations/cannyedges.cpp \
     operations/thresholdgray.cpp \
-    operations/houghlinesPdetector.cpp
+    operations/houghlinesPdetector.cpp \
+    filemanagement.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -36,6 +37,7 @@ HEADERS  += mainwindow.h \
     operations/function.h \
     operations/cannyedges.h \
     operations/thresholdgray.h \
-    operations/houghlinesPdetector.h
+    operations/houghlinesPdetector.h \
+    filemanagement.h
 
 FORMS    += mainwindow.ui

@@ -10,6 +10,8 @@
 using namespace std;
 using namespace cv;
 
+#define DECIMALS 2
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -73,14 +75,28 @@ void MainWindow::tabCreator(){
 
 cv::Mat MainWindow::callAllOperations(){
     originalPicture.copyTo(currentPicture);
-    cv::Mat returnImage;
+    startChrono();
     CustomTab* tab;
     for (int index = 0; index < ui->tabWidget->count()-1; ++index) {
         tab = qobject_cast<CustomTab*>(ui->tabWidget->widget(index));
         tab->doOperation(currentPicture).copyTo(currentPicture);
     }
-
+    double elapsedTime = stopChrono();
+    setTimer(elapsedTime);
     return (currentPicture);
+}
+
+void MainWindow::setTimer(double timeElapsed){
+    QString timeElapsedString = QString::number(timeElapsed,'f', DECIMALS);
+    ui->timerText->setText(timeElapsedString);
+}
+
+void MainWindow::startChrono(){
+    chrono.start();
+}
+
+double MainWindow::stopChrono(){
+    return(chrono.restart()/1000.00);
 }
 
 // private slots:

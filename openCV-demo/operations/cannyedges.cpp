@@ -60,7 +60,11 @@ cv::Mat CannyEdges::processImage(cv::Mat image) const{
     double low = getLowThreshold();
     int aperture = getApertureSize();
     bool L2 = getUseL2();
-    cv::cvtColor(image,image,cv::COLOR_RGB2GRAY);
+
+    if (image.channels() == 3){
+        cv::cvtColor(image,image,cv::COLOR_RGB2GRAY);
+    }
+
     cv::Canny(image,image,up,low,aperture,L2);
 
     return image;

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QElapsedTimer>
 #include <QTabWidget>
 #include "string.h"
 #include "customtab.h"
@@ -26,6 +27,7 @@ public:
     ~MainWindow();
 
 private:
+    QElapsedTimer chrono;
     void createNewTab();
     void clearTab(const CustomTab* tab);
     void deleteTab(CustomTab* tab);
@@ -33,6 +35,9 @@ private:
     void showImage();
     void tabCreator();
     cv::Mat callAllOperations();
+    void startChrono();
+    double stopChrono();
+    void setTimer(double timeElapsed);
 
 private slots:
     void onTabNameChanged();
