@@ -18,14 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->pushButton,&QPushButton::clicked,
-            this, &MainWindow::onPushButtonClicked);
     connect(ui->tabWidget, &QTabWidget::tabCloseRequested,
             this,&MainWindow::onTabClose);
     connect(ui->tabWidget, &QTabWidget::tabBarClicked,
             this,&MainWindow::onTabWidgetClicked);
 
     tabCreator();
+
+    setFileManagement();
+
+
 
 
 }
@@ -99,6 +101,22 @@ double MainWindow::stopChrono(){
     return(chrono.restart()/1000.00);
 }
 
+void MainWindow::setFileManagement(){
+    // Connect all buttons
+    connect(ui->PlayButton,&QPushButton::clicked,&myFileManager,&FileManagement::playPics);
+    connect(ui->PauseButton,&QPushButton::clicked,&myFileManager,&FileManagement::pausePics);
+    connect(ui->forwardButton,&QPushButton::clicked,&myFileManager,&FileManagement::showNextPic);
+    connect(ui->backButton,&QPushButton::clicked,&myFileManager,&FileManagement::showPreviousPic);
+    connect(ui->loadButton,&QPushButton::clicked,&myFileManager,&FileManagement::loadFile);
+
+    // Connect file changed
+
+    connect(&myFileManager,&FileManagement::oncurrentPictureChanged,this,&MainWindow::changedOriginalPicture);
+
+
+
+}
+
 // private slots:
 
 void MainWindow::onTabNameChanged(){
@@ -122,8 +140,7 @@ void MainWindow::newOperationSlot(){
     }
 }
 
-void MainWindow::onPushButtonClicked()
-{
+void MainWindow::onPushButtonClicked(){
     QString QfileName = QFileDialog::getOpenFileName();
     std::string fileName = QfileName.toUtf8().constData();
     originalPicture = cv::imread(fileName,CV_LOAD_IMAGE_COLOR);
@@ -142,6 +159,21 @@ void MainWindow::onTabWidgetClicked(int index){
     if (index == ui->tabWidget->count()-1){
         createNewTab();
     }
+}
+
+void MainWindow::changedOriginalPicture(){
+    // Update the image data (path and matrix)
+    QString QfileName = myFileManager.currentPicturePath;
+    std::string fileName = QfileName.toUtf8().constData();
+    originalPicture = cv::imread(fileName,CV_LOAD_IMAGE_COLOR);
+    originalPicture.copyTo(currentPicture);
+
+    // redo operations
+    callAllOperations();
+
+    showImage();
+
+
 }
 
 

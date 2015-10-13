@@ -8,6 +8,7 @@
 #include "customtab.h"
 #include "operations.h"
 #include <opencv2/opencv.hpp>
+#include "filemanagement.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    std::string currentPicturePath;
+    std::string picturePath;
     cv::Mat currentPicture;
     cv::Mat originalPicture;
 
@@ -28,6 +29,8 @@ public:
 
 private:
     QElapsedTimer chrono;
+    FileManagement myFileManager;
+
     void createNewTab();
     void clearTab(const CustomTab* tab);
     void deleteTab(CustomTab* tab);
@@ -38,6 +41,8 @@ private:
     void startChrono();
     double stopChrono();
     void setTimer(double timeElapsed);
+    void setFileManagement();
+
 
 private slots:
     void onTabNameChanged();
@@ -45,6 +50,7 @@ private slots:
     void onPushButtonClicked();
     void onTabClose(int index);
     void onTabWidgetClicked(int index);
+    void changedOriginalPicture();
 
 private:
     Ui::MainWindow *ui;

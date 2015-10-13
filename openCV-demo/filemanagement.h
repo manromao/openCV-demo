@@ -3,17 +3,40 @@
 
 #include <QObject>
 #include <QString>
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QDir>
+#include <QTimer>
 
-class fileManagement : public QObject
+#define INTERVAL_FOR_SLIDES_MSEC 1000
+
+class FileManagement : public QObject
 {
     Q_OBJECT
 public:
-    explicit fileManagement(QObject *parent = 0);
+    QString currentPicturePath;
+
+    explicit FileManagement(QObject *parent = 0);
+private:
+    QString currentFolderPath;
+    QDir currentDir;
+    QFileInfoList fileList;
+    QStringList formatFilter;
+    int currentPicIndex;
+
+    QTimer myTimer;
+
+    void setCurrentPicturePath(QString newPath);
 
 signals:
+    void oncurrentPictureChanged();
 
-public slots:
+public slots:    
+    void playPics();
+    void pausePics();
+    void showNextPic();
+    void showPreviousPic();
+    void loadFile();
 };
 
 #endif // FILEMANAGEMENT_H

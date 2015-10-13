@@ -80,7 +80,7 @@
      <rect>
       <x>190</x>
       <y>480</y>
-      <width>236</width>
+      <width>296</width>
       <height>44</height>
      </rect>
     </property>
@@ -98,7 +98,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../Desktop/Icons/Button-Add-icon.png</normaloff>../../../Desktop/Icons/Button-Add-icon.png</iconset>
+         <normaloff>../Icons/Button-Add-icon.png</normaloff>../Icons/Button-Add-icon.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -124,7 +124,39 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../Desktop/Icons/Button-Rewind-icon.png</normaloff>../../../Desktop/Icons/Button-Rewind-icon.png</iconset>
+         <normaloff>../Icons/Button-Rewind-icon.png</normaloff>../Icons/Button-Rewind-icon.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PauseButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../Icons/Button-Pause-icon.png</normaloff>../Icons/Button-Pause-icon.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -150,7 +182,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../Desktop/Icons/Button-Play-icon.png</normaloff>../../../Desktop/Icons/Button-Play-icon.png</iconset>
+         <normaloff>../Icons/Button-Play-icon.png</normaloff>../Icons/Button-Play-icon.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -176,7 +208,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../Desktop/Icons/Button-Fast-Forward-icon.png</normaloff>../../../Desktop/Icons/Button-Fast-Forward-icon.png</iconset>
+         <normaloff>../Icons/Button-Fast-Forward-icon.png</normaloff>../Icons/Button-Fast-Forward-icon.png</iconset>
        </property>
        <property name="iconSize">
         <size>
